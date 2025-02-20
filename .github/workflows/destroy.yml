@@ -16,7 +16,7 @@ jobs:
       - name: Checkout el repo principal con Terraform
         uses: actions/checkout@v4
         with:
-          repository: QuietByteLA/admin-destroy/actions
+          repository: QuietByteLA/admin-destroy
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
