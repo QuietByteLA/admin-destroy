@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: QuietByteLA/admin-destroy
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.TERRAFORM_DESTROY }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
