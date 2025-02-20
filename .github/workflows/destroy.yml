@@ -16,7 +16,7 @@ jobs:
       - name: Checkout el repo principal con Terraform
         uses: actions/checkout@v4
         with:
-          repository: TU_USUARIO_GITHUB/proyecto_principal
+          repository: QuietByteLA/admin-destroy/actions
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
@@ -39,4 +39,4 @@ jobs:
       - name: Destroy All Terraform Resources
         run: |
           cd infra
-          terraform destroy -auto-approve -var-file=staging.tfvars
+          terraform destroy -auto-approve 
