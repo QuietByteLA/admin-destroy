@@ -15,9 +15,15 @@ jobs:
       - name: 📥 Checkout el repo en la rama staging
         uses: actions/checkout@v4
         with:
-          repository: QuietByteLA/proyectGYM-monorepo  # 🎯 Repo correcto
-          ref: staging  # 🏷️ Clonar la rama staging
+          repository: QuietByteLA/proyectGYM-monorepo
+          ref: staging  #  Clonar la rama staging
+          fetch-depth: 0  # Traer todas las ramas
           token: ${{ secrets.TERRAFORM_DESTROY }}
+
+
+      - name: 🔍 Verificar ramas disponibles
+        run: |
+          git branch -r
 
       - name: 🔑 Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
