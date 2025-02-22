@@ -39,7 +39,7 @@ jobs:
 
       - name: 📂 Verificar contenido del repositorio
         run: |
-          ls -R
+          ls -R infra/
 
       - name: 🚀 Initialize Terraform con backend S3 y variables
         run: |
