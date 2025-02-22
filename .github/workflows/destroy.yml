@@ -2,6 +2,8 @@
 name: "🛑 Destroy Terraform"
 
 on:
+  schedule:
+    - cron: "0 */12 * * *"  # ⏰ Se ejecuta cada 12 horas
   workflow_dispatch:  # 🔄 Permite ejecutar manualmente el workflow
 
 jobs:
