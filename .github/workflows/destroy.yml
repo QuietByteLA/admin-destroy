@@ -19,7 +19,7 @@ jobs:
           ref: staging  #  Clonar la rama staging
           fetch-depth: 0  # Traer todas las ramas
           token: ${{ secrets.TERRAFORM_DESTROY }}
-
+ 
 
       - name: 🔍 Verificar ramas disponibles
         run: |
