@@ -1,5 +1,5 @@
 # 🎯 Workflow para destruir la infraestructura con Terraform
-name: 🛑 Destroy Terraform
+name: "🛑 Destroy Terraform"
 
 on:
   workflow_dispatch:  # 🔄 Permite ejecutar manualmente el workflow
@@ -12,18 +12,34 @@ jobs:
       contents: read
 
     steps:
-      - name: 📥 Checkout el repo en la rama staging
+      - name: 📥 Checkout el repo con submódulos
         uses: actions/checkout@v4
         with:
           repository: QuietByteLA/proyectGYM-monorepo
-          ref: staging  #  Clonar la rama staging
+          ref: staging  # Clonar la rama staging
           fetch-depth: 0  # Traer todas las ramas
           token: ${{ secrets.TERRAFORM_DESTROY }}
- 
+          submodules: recursive  # 🔹 Clona los submódulos
+
+      - name: 🔄 Actualizar submódulos (si no se clonan bien)
+        run: |
+          git submodule update --init --recursive
+          git submodule foreach git pull origin main
 
       - name: 🔍 Verificar ramas disponibles
         run: |
           git branch -r
+
+      - name: ✅ Confirmar la rama actual
+        run: |
+          git branch --show-current
+
+      - name: 📂 Verificar contenido del repositorio
+        run: |
+          echo "📌 Contenido raíz del repo:"
+          ls -R
+          echo "📌 Contenido de infra/:"
+          ls -R infra/ || echo "⚠️ ERROR: La carpeta infra/ no existe"
 
       - name: 🔑 Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -37,17 +53,15 @@ jobs:
         with:
           terraform_version: 1.6.0
 
-      - name: 📂 Verificar contenido del repositorio
-        run: |
-          ls -R infra/
-
       - name: 🚀 Initialize Terraform con backend S3 y variables
         run: |
-          cd infra
+          cd infra || exit 1
           terraform init -reconfigure \
           -backend-config="${{ github.ref_name }}.backend.tfvars"
 
       - name: 🔥 Destroy All Terraform Resources
         run: |
-          cd infra
+          cd infra || exit 1
           terraform destroy -auto-approve -var-file=${{ github.ref_name }}.tfvars
+
+      
