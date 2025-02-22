@@ -56,8 +56,8 @@ jobs:
       - name: 🚀 Initialize Terraform con backend S3 y variables
         run: |
           cd infra || exit 1
-          terraform init -reconfigure \
-          -backend-config="${{ github.ref_name }}.tfvars"
+          terraform init -reconfigure 
+         
 
       - name: 🔥 Destroy All Terraform Resources
         run: |
