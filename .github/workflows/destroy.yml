@@ -57,7 +57,7 @@ jobs:
         run: |
           cd infra || exit 1
           terraform init -reconfigure \
-          -backend-config="${{ github.ref_name }}.backend.tfvars"
+          -backend-config="${{ github.ref_name }}.tfvars"
 
       - name: 🔥 Destroy All Terraform Resources
         run: |
